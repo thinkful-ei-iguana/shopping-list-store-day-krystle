@@ -134,16 +134,10 @@ const handleDeleteItemClicked = function () {
   });
 };
 
-const editTile = function (){
-
-}
-
-const addEditTitle = function () {
-  $('edit-title').click(function) {
-    
-  }
-
-}
+const editListItemName = function (id, itemName) {
+  const item = store.items.find(item => item.id === id);
+  item.name = itemName;
+};
 
 /**
  * Toggles the store.hideCheckedItems property
@@ -164,20 +158,14 @@ const handleToggleFilterClick = function () {
 };
 
 //user can edit the title of an item
-const handleChangeItem = function() {
-  $('.js-shopping-list').on('submit','#shopping-item-change', function (event) {
-    event.preventDefault();
-    const newItemName = $(`.${getItemIdFromElement(event.currentTarget)}`).val();
-    changeItemName(getItemIdFromElement(event.currentTarget), newItemName);
-    render();
-  });
-};
 
-const changeItemName = function(id, newName) {
-  store.items.forEach(function(e){
-    if(e.id === id){
-      e.name = newName;
-    }
+const handleEditShoppingItemSubmit = function () {
+  $('.js-shopping-list').on('submit', '.js-edit-item', event => {
+    event.preventDefault();
+    const id = getItemIdFromElement(event.currentTarget);
+    const itemName = $(event.currentTarget).find('.shopping-item').val();
+    editListItemName(id, itemName);
+    render();
   });
 };
 //user can press a button on an item labeled "change item"
@@ -201,6 +189,7 @@ const handleShoppingList = function () {
   handleToggleFilterClick();
   handleChangeItem();
 };
+
 
 // when the page loads, call `handleShoppingList`
 $(handleShoppingList);
