@@ -1,3 +1,4 @@
+'use strict';
 const store = {
   items: [
     { id: cuid(), name: 'apples', checked: false },
@@ -26,6 +27,11 @@ const generateItemElement = function (item) {
         <button class='shopping-item-delete js-item-delete'>
           <span class='button-label'>delete</span>
         </button>
+        <form id='shopping-item-change'>
+          <label for="item-name-change">Change Item Name</label>
+          <input type="text" name="item-name-change" class="${item.id}">
+          <button type="submit">Change Item</button>
+        </form>
       </div>
     </li>`;
 };
@@ -145,6 +151,27 @@ const handleToggleFilterClick = function () {
   });
 };
 
+//user can edit the title of an item
+const handleChangeItem = function() {
+  $('.js-shopping-list').on('submit','#shopping-item-change', function (event) {
+    event.preventDefault();
+    const newItemName = $(`.${getItemIdFromElement(event.currentTarget)}`).val();
+    changeItemName(getItemIdFromElement(event.currentTarget), newItemName);
+    render();
+  });
+};
+
+const changeItemName = function(id, newName) {
+  store.items.forEach(function(e){
+    if(e.id === id){
+      e.name = newName;
+    }
+  });
+};
+//user can press a button on an item labeled "change item"
+//get new name(?)
+//with the new name, change the name of the item in the store and rerender the page
+
 /**
  * This function will be our callback when the
  * page loads. It is responsible for initially 
@@ -160,6 +187,7 @@ const handleShoppingList = function () {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleToggleFilterClick();
+  handleChangeItem();
 };
 
 // when the page loads, call `handleShoppingList`
