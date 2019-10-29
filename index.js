@@ -9,6 +9,7 @@ const store = {
   hideCheckedItems: false
 };
 
+
 const generateItemElement = function (item) {
   let itemTitle = `<span class='shopping-item shopping-item__checked'>${item.name}</span>`;
   if (!item.checked) {
@@ -132,6 +133,17 @@ const handleDeleteItemClicked = function () {
     render();
   });
 };
+
+const editTile = function (){
+
+}
+
+const addEditTitle = function () {
+  $('edit-title').click(function) {
+    
+  }
+
+}
 
 /**
  * Toggles the store.hideCheckedItems property
